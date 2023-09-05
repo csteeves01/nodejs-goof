@@ -8,7 +8,7 @@ jobs:
       - image: cimg/openjdk:11.0
     steps:    
       - checkout
-      - run: mvn install
+      - run: mvn clean
       - snyk/scan:
           token-variable: SNYK_TOKEN
           command: monitor
