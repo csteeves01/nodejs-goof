@@ -11,10 +11,12 @@ jobs:
       - run: mvn clean
       - snyk/scan:
           token-variable: SNYK_TOKEN
-          command: monitor
+          command: snyk monitor --docker node:6-stretch
           monitor-on-build: false          
         
 workflows:
     build-snyk:
         jobs: 
         - snyk-scan
+      
+
