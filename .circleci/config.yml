@@ -1,18 +1,21 @@
 version : 2.1
 orbs:
-    build:
-        docker:
-        image: circleci/node:latest
-    steps: checkout
-    run: npm install
+  snyk: snyk/snyk@1.1.2
 
-snyk/scan:
-            fail-on-issues: false
-            monitor-on-build: true
-            severity-threshold: high
-            token-variable: SNYK_TOKEN
+jobs:
+  snyk-scan:
+    docker:
+      - image: cimg/openjdk:11.0
+    steps:    
+      - checkout
+      - run: mvn install
+      - snyk/scan:
+          token-variable: SNYK_TOKEN
+          command: monitor
+          monitor-on-build: false          
         
 workflows:
-    version: 2
-    build_and_test:
-        jobs: build
+    build-snyk:
+        jobs: 
+        - build
+        - snyk-scan
