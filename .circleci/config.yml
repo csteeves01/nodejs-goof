@@ -8,7 +8,7 @@ jobs:
       - image: cimg/openjdk:11.0
     steps:    
       - checkout
-      - run: mvn clean
+      - run: npm install
       - snyk/scan:
           token-variable: SNYK_TOKEN
           command: snyk monitor --docker node:6-stretch
